@@ -1,0 +1,72 @@
+---
+title: "Leaflet Assignment"
+author: "Haiko Didzoleit"
+date: "28 November 2016"
+output: html_document
+always_allow_html: yes
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This map is used for the coursera assignment "Developing data products" week 2. 
+To remember the technical failure the topic used is the Fukushima reactor plant that created a massive radiation failure in japan and wide parts of east asia coastial regions for hundreds of years. 
+
+
+```{r, eval=FALSE, echo=FALSE}
+library(leaflet)
+my_map <- leaflet() %>% 
+  addTiles()
+my_map
+```
+
+```{r, echo=FALSE}
+library(leaflet)
+my_map <- leaflet() %>% 
+  addTiles()
+
+```
+
+## Creating the basic maps with marker on the powerplant
+
+```{r, eval=FALSE}
+library(leaflet)
+my_map <- my_map %>%
+  addMarkers(lat=37.422535, lng=141.034000, 
+             popup="Tepco Power plant")
+my_map
+```
+
+## Additionally mark the areas of the radioactive contaminated area which was designated by Greenpeace on 2015
+
+```{r}
+library(leaflet)
+my_map <- my_map %>%
+  addMarkers(lat=37.422035, lng=141.034000, 
+             popup="Tepco Power plant")
+my_map
+
+md_cities <- data.frame(name = c("Baltimore", "Frederick", "Rockville", "Gaithersburg", 
+                                 "Bowie", "Hagerstown", "Annapolis"),
+                        pop = c(20000, 10000, 8000, 4000, 1500, 1000, 400),
+                        lat = c(37.422535, 37.422535, 37.422535, 37.422535, 37.422535, 37.422535, 37.422535),
+                        lng = c(141.034000, 141.034000, 141.034000, 141.034000, 141.034000,141.034000,141.034000),
+                        col = c("lightgreen","yellow","orange","darkorange","red","darkred","black")
+)
+md_cities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(lat = md_cities$lat, lng = md_cities$lng, weight = 1, radius = md_cities$pop, color = md_cities$col) %>%
+  addLegend(labels= c("low radiation", "", "", "medium radiation", "high radiation", "extreme radiation", "core location"), color = md_cities$col)
+  
+```
+Thank you for observing my scheme for this course. 
+And mind the danger of nuclear powerplants and the radiation
+
+## Conclusion
+
+For more details about the leaflet package for R 
+visit http://rstudio.github.io/leaflet/.
+
